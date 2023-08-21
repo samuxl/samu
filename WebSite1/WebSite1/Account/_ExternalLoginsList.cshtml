@@ -1,0 +1,21 @@
+﻿@if (OAuthWebSecurity.RegisteredClientData.Count == 0) {
+    <div class="message-info">
+        <p>
+            未設定任何外部驗證服務。請參閱<a href="https://go.microsoft.com/fwlink/?LinkId=226949">此文章</a>
+            以取得設定此 ASP.NET 應用程式以支援透過外部服務進行登入的詳細資料。
+        </p>
+    </div>
+} else {
+    <form method="post">
+    @AntiForgery.GetHtml()
+    <fieldset id="socialLoginList">
+        <legend>使用其他服務登入</legend>
+        <p>
+            @foreach (var client in OAuthWebSecurity.RegisteredClientData) {
+                <button type="submit" name="provider" value="@client.AuthenticationClient.ProviderName"
+                        title="使用您的 @client.DisplayName 帳戶登入">@client.DisplayName</button>
+            }
+        </p>
+    </fieldset>
+    </form>
+}
